@@ -3,8 +3,9 @@ package com.example.parkproject.service;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,6 +59,37 @@ public class ParkService {
 			}
 		}
 		return count;
+	}
+
+	public Map<String, Integer> countpeoples() {
+		// TODO Auto-generated method stub
+		
+		Map<String,Integer> divideages=new HashMap<>();
+		
+
+		List<UserRegistration> getall=userRepository.findAll();
+		int fir = 0,so = 0,t = 0;//,fo,fi,six,sev=0;
+		for(UserRegistration onebyone:getall)
+		{
+			if(onebyone.getAge()>=0&&onebyone.getAge()<=10)
+			{
+				fir++;
+				divideages.put("Zero to ten years childers are",fir);
+			}
+			else if(onebyone.getAge()>=11&&onebyone.getAge()<=20)
+			{
+				so++;
+				divideages.put("eleven to twenty years boy&girls are ",so);
+			}
+			else if(onebyone.getAge()>=21&&onebyone.getAge()<=30)
+			{
+				t++;
+				divideages.put("twentyone to thiry years people are",t);
+			}
+			
+		}
+		
+		return divideages;
 	}
 	
 	
