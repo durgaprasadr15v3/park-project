@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,12 +30,13 @@ public class ParkController {
 	     @PostMapping("/register")
 	    public ResponseEntity<?> registerUser(@RequestBody UserRegistration userRegistration) {
 	    	
-	    	 System.out.print(userRegistration.getUsername());
-	        // Check if username is already taken
-	    	UserRegistration present=new UserRegistration();
-	    	 String username=present.getUsername();
-//	    	 String comingusername=userRegistration.getUsername();
-//		 
+//	    	 System.out.print(userRegistration.getUsername());
+//	        // Check if username is already taken
+//	    	UserRegistration present=new UserRegistration();
+//	    	 String username=present.getUsername();
+////	    	 String comingusername=userRegistration.getUsername();
+//		
+	    	 
 	        if (parkService.findByUsername(userRegistration.getUsername()) != null)
 	         {
 	        	
@@ -68,10 +70,8 @@ public class ParkController {
 	            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
 	        }
 	        
-	        // Generate JWT token (you'll need to implement this)
-	       //String token = generateToken(user);
-	        
-	        // Return token to the client
+
+
 	        
 	        return ResponseEntity.ok("welcome to park");
 	    }
@@ -99,7 +99,19 @@ public class ParkController {
 	       long hours = duration.toHours();
 	    long minutes = duration.minusHours(hours).toMinutes();
 	      return ResponseEntity.ok("Duration spent in the park: " + hours + " hours and " + minutes + " minutes");
-	    }  
+	    } 
+	    
+	    
+	    @GetMapping("/noofpeoplebetweenage")
+	    public ResponseEntity<String> countpeople() 
+	    {
+	    	int age=25;
+	    	int count=parkService.countpeoplebetweenage();
+	    	
+	    	return ResponseEntity.ok("given age  between peoples are "+count);
+	    	
+	    	
+	    }
 	    
 	    
 }
